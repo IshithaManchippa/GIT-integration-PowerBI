@@ -1,0 +1,59 @@
+table Defect_Status
+	lineageTag: fcdfbe9c-991c-4488-bf88-3b943c3d5de1
+
+	column StatusId
+		dataType: int64
+		formatString: 0
+		lineageTag: f7739110-4c28-48a5-a7cd-5d1bc9c0c078
+		summarizeBy: none
+		sourceColumn: StatusId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 03ccb375-7cb0-40b4-8b71-959936e64f20
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 64c41270-dac0-4bd2-b84a-d99ffc7d3c36
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsActive
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fe2dfada-29fd-45ea-b51c-6aa142c305a1
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 06afa217-95bf-480c-9835-0504ec668f17
+		summarizeBy: none
+		sourceColumn: SortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Defect_Status = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_Defect_Status = Source{[Schema="dbo",Item="QC_M_Defect_Status"]}[Data]
+				in
+				    dbo_QC_M_Defect_Status
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

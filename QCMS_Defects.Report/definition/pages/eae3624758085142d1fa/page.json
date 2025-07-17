@@ -1,0 +1,183 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "eae3624758085142d1fa",
+  "displayName": "Ticket Details",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "bba1b6ebd51cb7794877",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "QCMS_DEFECTS"
+              }
+            },
+            "Property": "StreamName"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "15ab16730a4f5258bbca",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "QCMS_DEFECTS"
+              }
+            },
+            "Property": "Priority"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "q",
+              "Entity": "QCMS_DEFECTS",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "q"
+                          }
+                        },
+                        "Property": "Priority"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Medium'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "c40331164bfa14bf13e1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "QCMS_DEFECTS"
+              }
+            },
+            "Property": "Aging Bucket"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "q",
+              "Entity": "QCMS_DEFECTS",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "q"
+                          }
+                        },
+                        "Property": "Aging Bucket"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'>30 Days'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "394fb89c9a667b79ae88",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "f73586b886cd3dc57154",
+        "boundFilter": "bba1b6ebd51cb7794877",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "QCMS_DEFECTS"
+              }
+            },
+            "Property": "StreamName"
+          }
+        }
+      },
+      {
+        "name": "1451a3569b604c0fe954",
+        "boundFilter": "15ab16730a4f5258bbca",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "QCMS_DEFECTS"
+              }
+            },
+            "Property": "Priority"
+          }
+        }
+      },
+      {
+        "name": "e299490d0073948b0c7f",
+        "boundFilter": "c40331164bfa14bf13e1",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "QCMS_DEFECTS"
+              }
+            },
+            "Property": "Aging Bucket"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "863abcc207967b36a466",
+  "position": {
+    "x": 9.88558352402746,
+    "y": 0,
+    "z": 0,
+    "height": 718.35240274599551,
+    "width": 1268.6498855835241
+  },
+  "visual": {
+    "visualType": "pythonVisual",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QCMS_DEFECTS"
+                    }
+                  },
+                  "Property": "Title"
+                }
+              },
+              "queryRef": "QCMS_DEFECTS.Title",
+              "nativeQueryRef": "Title"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'# The following code to create a dataframe and remove duplicated rows is always executed and acts as a preamble for your script: \n\n# dataset = pandas.DataFrame(undefined)\n# dataset = dataset.drop_duplicates()\n\n# Paste or type your script code here:\nimport pandas as pd\nfrom sklearn.feature_extraction.text import CountVectorizer\nimport matplotlib.pyplot as plt\n\n# Combine all descriptions into a single list\ntext_data = dataset[''Title''].dropna().astype(str)\n\n# Initialize the vectorizer (removes English stopwords automatically)\nvectorizer = CountVectorizer(stop_words=''english'', max_features=20)\nX = vectorizer.fit_transform(text_data)\n\n# Sum up word counts\nword_freq = pd.DataFrame({\n    ''Word'': vectorizer.get_feature_names_out(),\n    ''Frequency'': X.toarray().sum(axis=0)\n}).sort_values(by=''Frequency'', ascending=False)\n\n# Plotting top words\nplt.figure(figsize=(10, 5))\nplt.barh(word_freq[''Word''], word_freq[''Frequency''], color=''skyblue'')\nplt.xlabel(''Frequency'')\nplt.title(''Top Keywords in Ticket Descriptions'')\nplt.gca().invert_yaxis()\nplt.tight_layout()\nplt.show()\n'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

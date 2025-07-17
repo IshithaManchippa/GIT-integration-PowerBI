@@ -1,0 +1,50 @@
+table Defect_Type
+	lineageTag: 47abf66b-2cb1-476e-aa77-501d594f592b
+
+	column DefTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: 4195c8e4-fdd7-4913-9a02-d5bef97c2788
+		summarizeBy: none
+		sourceColumn: DefTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column DefectType
+		dataType: string
+		lineageTag: ab853cee-cd80-4dd9-9da3-21e511805e76
+		summarizeBy: none
+		sourceColumn: DefectType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 5efd15a8-9ce7-41bb-b59a-e652d01051ce
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsActive
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3eaf8f2c-0de5-48f3-bf04-8c24cd86627c
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Defect_Type = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_Defect_Type = Source{[Schema="dbo",Item="QC_M_Defect_Type"]}[Data]
+				in
+				    dbo_QC_M_Defect_Type
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

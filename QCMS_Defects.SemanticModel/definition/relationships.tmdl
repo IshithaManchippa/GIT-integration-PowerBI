@@ -1,0 +1,138 @@
+relationship 24bcd408-c67c-440f-9a4f-d8347136cbb8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Client.FirstProductDate
+	toColumn: LocalDateTable_6f7e1d77-2605-499d-b59a-65219b39761e.Date
+
+relationship 21caf546-e2e5-44b4-bf60-cbbda1fb6038
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Client.CreatedDate
+	toColumn: LocalDateTable_1ea5dfa1-2ec2-4cb4-a5f4-5a27dc62c1a0.Date
+
+relationship 8b538793-e066-4713-9b70-3f3c47117bc9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Client.ModifiedDate
+	toColumn: LocalDateTable_ed67747f-54ce-48c0-bcbd-d348d0ac7cff.Date
+
+relationship c752c02a-1c20-4117-8a37-2ba3db4ef749
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Client Users'.DOB
+	toColumn: LocalDateTable_8525b2f5-ce6e-4d81-8ad7-a3d2498aeaf7.Date
+
+relationship dd4d2462-6381-4dc7-8287-9b2ee1b46813
+	joinOnDateBehavior: datePartOnly
+	fromColumn: QCMS_DEFECTS.CreatedDate
+	toColumn: LocalDateTable_fd9fdaee-bc76-41b2-a3cc-b604144f682c.Date
+
+relationship 01b221d9-ca96-cb44-ec5b-30de7e881827
+	crossFilteringBehavior: bothDirections
+	fromColumn: QCMS_DEFECTS.RootCause
+	toColumn: 'Root Cause'.Id
+
+relationship 30a29fa3-a8d5-4f2e-19fc-6401bffddcea
+	fromColumn: QCMS_DEFECTS.ClientId
+	toColumn: Client.ClientID
+
+relationship a599d660-5574-42f8-869f-61a4a3dad859
+	joinOnDateBehavior: datePartOnly
+	fromColumn: QCMS_DEFECTS.ModifiedDate
+	toColumn: LocalDateTable_95dab058-7bef-467c-aa3a-468fcc5f43cc.Date
+
+relationship bd200f46-7b6b-4fdc-ad4c-32aad4fa3d24
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Refresh Date'.'Refresh Date'
+	toColumn: LocalDateTable_058c1858-a9c9-4465-926d-fc045fc3c125.Date
+
+relationship 3271df8c-3ce0-fea4-a0d8-1e166fd5f47b
+	fromColumn: QCMS_DEFECTS.EnvironmentId
+	toColumn: Environment.EnvironmentId
+
+relationship cbc5173d-df65-4b92-91fe-5a968442617f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: UniqueDefects.CreatedDate
+	toColumn: LocalDateTable_7738b69f-688b-4efd-a4b4-e0ae1117fc7e.Date
+
+relationship a5ca6dca-86b5-4d6a-aeef-6d552a024698
+	joinOnDateBehavior: datePartOnly
+	fromColumn: qcms_defects_deduped.MinCreatedDate
+	toColumn: LocalDateTable_fcdfc2f4-1739-4384-b263-976aae2021eb.Date
+
+relationship AutoDetected_34ea3206-fa12-47db-adad-860b6c61e8de
+	fromColumn: QCMS_DEFECTS.Category
+	toColumn: Defect_Category.Category
+
+relationship d2d95e30-31b7-4c77-bd38-8172c547125c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.CREATEDDATE
+	toColumn: LocalDateTable_6253822f-3485-47eb-848c-51a96dd4650e.Date
+
+relationship d5eecb2f-716d-4c72-8ec3-f864c67da205
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.MODIFIEDDATE
+	toColumn: LocalDateTable_bc64ee08-62b6-4ebd-b3fb-e06bf4182f88.Date
+
+relationship fb99939e-4007-4207-bdb8-f6c68e0b85a1
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.EstimatedTestCaseCompletionDate
+	toColumn: LocalDateTable_c1985434-9928-4163-927e-ad02ca08ff88.Date
+
+relationship 196e1ef9-2d39-4535-a643-249e88e34708
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.ActualTestCaseCompletionDate
+	toColumn: LocalDateTable_32cc8e29-cfca-4307-b228-1579ed0f60d7.Date
+
+relationship 9e83985c-c474-4a79-94fd-d892bc35c4c2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.CREstimatedEndDate
+	toColumn: LocalDateTable_707dd836-0b19-4bc6-aa14-ad908976d960.Date
+
+relationship e52a77ae-f0cd-482f-b653-8c73e88abf6e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.DeploymentDate
+	toColumn: LocalDateTable_00bddf69-2964-4bde-8d0f-ba6b25e03590.Date
+
+relationship 9f23f576-d379-4b84-8c6a-19de471c680c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.DevlopmentEndDate
+	toColumn: LocalDateTable_7da5a3b6-7b08-4fbf-84bc-3f4e37121901.Date
+
+relationship 9afeeed3-f53c-40b7-a5f6-b1b6deb51b59
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.FRDReviewStartDate
+	toColumn: LocalDateTable_6a363e2b-ae1b-44a5-9e85-643c0a3c0a5a.Date
+
+relationship ede81921-834d-4b43-bb41-b725bdd2ad5a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.TechSpecsReviewStartDate
+	toColumn: LocalDateTable_cea2ab36-705d-458d-9c6a-286208eb1043.Date
+
+relationship db3e36b0-0485-465f-b705-c1be768c2276
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CRDETAILS.FRDTestCaseStartDate
+	toColumn: LocalDateTable_1276b164-b51a-4aac-b3e0-8b745bca7a5f.Date
+
+relationship AutoDetected_015646e1-5914-492a-90b8-317ddf65b34f
+	fromColumn: QCMS_DEFECTS.DefectType
+	toColumn: Defect_Type.DefectType
+
+relationship AutoDetected_68d9a838-ce1d-4f4b-baf2-483524cf1d44
+	fromColumn: QCMS_DEFECTS.Priority
+	toColumn: Defect_Priority.Priority
+
+relationship AutoDetected_cb98eb15-49ca-487c-8ceb-aa8f6de637e2
+	fromColumn: QCMS_DEFECTS.Status
+	toColumn: Defect_Status.Status
+
+relationship AutoDetected_8dd24cf1-0cee-46d7-bd94-c29f262e1a31
+	fromColumn: CRDETAILS.CRType
+	toColumn: CRType.Id
+
+relationship cb6b3963-997b-4210-bd66-2b5416553a95
+	joinOnDateBehavior: datePartOnly
+	fromColumn: QCMS_DEFECTS.UTC-4
+	toColumn: LocalDateTable_43e4af2b-7531-4f83-a6e6-1113a58de760.Date
+
+relationship 01ed063a-31e2-42f3-9fb5-4d7d741cab79
+	joinOnDateBehavior: datePartOnly
+	fromColumn: QCMS_DEFECTS.CreatedDateTime_UTC
+	toColumn: LocalDateTable_981fe801-d634-4a5c-bab4-dba9e48966e7.Date
+

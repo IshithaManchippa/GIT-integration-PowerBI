@@ -1,0 +1,41 @@
+table Defect_Category
+	lineageTag: 7db56ccc-ba68-4690-9204-6d0b637b7f10
+
+	column CategoryId
+		dataType: int64
+		formatString: 0
+		lineageTag: 1dd968b8-3910-4dda-aa50-7544e2cb0b2c
+		summarizeBy: none
+		sourceColumn: CategoryId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 4b7b9562-58ea-4eaf-b302-82a0b435cef3
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 23b659a4-d72f-49f8-9898-62dbade61c19
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Defect_Category = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_Defect_Category = Source{[Schema="dbo",Item="QC_M_Defect_Category"]}[Data]
+				in
+				    dbo_QC_M_Defect_Category
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,42 @@
+EVALUATE
+	SELECTCOLUMNS(
+		TOPN(
+			100,
+			'QCMS_DEFECTS',
+			'QCMS_DEFECTS'[DefectId],
+			ASC
+		),
+		'QCMS_DEFECTS'[DefectId],
+		'QCMS_DEFECTS'[StreamName],
+		'QCMS_DEFECTS'[ClientId],
+		'QCMS_DEFECTS'[ReleaseId],
+		'QCMS_DEFECTS'[AimsIncident],
+		'QCMS_DEFECTS'[ReleaseName],
+		'QCMS_DEFECTS'[CRNo],
+		'QCMS_DEFECTS'[DefectType],
+		'QCMS_DEFECTS'[Severity],
+		'QCMS_DEFECTS'[Priority],
+		'QCMS_DEFECTS'[Category],
+		'QCMS_DEFECTS'[Status],
+		'QCMS_DEFECTS'[EnvironmentId],
+		'QCMS_DEFECTS'[CreatedDate],
+		'QCMS_DEFECTS'[ReasonName],
+		'QCMS_DEFECTS'[RootCause],
+		'QCMS_DEFECTS'[AssignedQaUser],
+		'QCMS_DEFECTS'[AgingDays],
+		'QCMS_DEFECTS'[CreatedBy],
+		'QCMS_DEFECTS'[AssignedTo],
+		'QCMS_DEFECTS'[Title],
+		'QCMS_DEFECTS'[ModifiedDate],
+		'QCMS_DEFECTS'[CR Name],
+		'QCMS_DEFECTS'[ModifiedBy],
+		'QCMS_DEFECTS'[RejectReasonId],
+		'QCMS_DEFECTS'[IssueTypeId],
+		'QCMS_DEFECTS'[Source],
+		'QCMS_DEFECTS'[Formatted_Created_Date],
+		'QCMS_DEFECTS'[Created_Month_Year],
+		'QCMS_DEFECTS'[Created_WeekOfMonth],
+		'QCMS_DEFECTS'[Created_Year],
+		'QCMS_DEFECTS'[Aging Bucket]
+	)
+	ORDER BY 'QCMS_DEFECTS'[DefectId] ASC

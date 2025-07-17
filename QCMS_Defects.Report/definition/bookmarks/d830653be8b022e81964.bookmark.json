@@ -1,0 +1,1083 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.4.0/schema.json",
+  "displayName": "Breaches by Priority",
+  "name": "d830653be8b022e81964",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "6c35b08d6b6bd0610407",
+      "df1560fe8982c9130c36",
+      "7d3b7bb8e2648019e236",
+      "8d08788770e0c3a7c2da",
+      "dd3d01e11902a524b0a8",
+      "9b648273a5b9e3c03ca0"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "fa891c91aa745085f6e9",
+    "filters": {
+      "byExpr": [
+        {
+          "name": "14b9245edab9688aea52",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "QCMS_DEFECTS"
+                }
+              },
+              "Property": "ReleaseName"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "fa891c91aa745085f6e9": {
+        "visualContainers": {
+          "3d520bafef2ff5fdaf49": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "f160909aa4e454b6c74f": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "9b7e044cb808414d6a78": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "7d3b7bb8e2648019e236": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "11d0905d159b7ac1596e",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Priority"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "327cd98bfc24a0462f59",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breaches Over Time"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineStackedColumnComboChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breaches Over Time"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Priority"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8d08788770e0c3a7c2da": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "235bb5299b986800c262",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Formatted_Created_Date"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0de33b38e0c42d60c5ba",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breached Count"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breached Count"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Formatted_Created_Date"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "f1e649ea8eb3f582441f": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "d53cabb406fd7b7c9025": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c5679bbb5b909f1a4c28",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Priority"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "488f202aafb9f6b791ff",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Avg Final Resolution Time"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Avg Final Resolution Time"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Priority"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "f2cc374a28122d01f976": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f3f8b7e3641eec06014e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Total Open Defects"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "497ff030f97c325fd8b9",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Total SLA Tickets"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "58fdf620b4427a3279f4",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA_Not Breached"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8423897c06a3b4d65dd1",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breached Count"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "df540940bd40d4ede7ff",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "donutChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Total Open Defects"
+                    }
+                  }
+                }
+              ],
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "bf0fd0d517d0b7c82b98": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f7bb0125c68c6dc3a146",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breached Count"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "card",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breached Count"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "5612be190534e21d81d0": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1dc67043b659a00b1e54",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - Low"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "card",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - Low"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "3ac69f3b32222026fc73": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "f05f1be316fffe2b3d4c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - Medium"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "card",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - Medium"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "caff42974dd9cc337c24": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "04d0e921ce0b47f11aec",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - High"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "card",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - High"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "6c0ab2290d38f8106384": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "61d2038462c62547517a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - Critical"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "card",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA Breach - Critical"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "a7a2a4c0b8cbf3268be6": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "944da085c9d0c9596420": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "0556d5d19afd09774ca6",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Year"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "q",
+                                "Entity": "QCMS_DEFECTS",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "q"
+                                            }
+                                          },
+                                          "Property": "Created_Year"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "2025L"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Year"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "bd350ea03f9b1930c556": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fd060b6cf1dddbb458be",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Month_Year"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Month_Year"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "7172da7cb1909c3292cf": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fc0e027768b1605d4fe5",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_WeekOfMonth"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "q",
+                                "Entity": "QCMS_DEFECTS",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "q"
+                                            }
+                                          },
+                                          "Property": "Created_WeekOfMonth"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "4L"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_WeekOfMonth"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "c91f99e26adc973d0cb1": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "79fb830c6aa4844cdaf8",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "q",
+                                "Entity": "QCMS_DEFECTS",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "q"
+                                            }
+                                          },
+                                          "Property": "Status"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "'Open'"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Status"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "f11f1b0f3ec5542e4f1a": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "b258c5df3d51b50bac03",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA_Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "SLA_Status"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "eb8a1c0f58454f5c4e7c": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "240b5ed000b9c17c1000": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "eeabc0a85e05cbecd055": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "01248ef359a9b6ba229e": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "3c77539b967c4070cb57": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "dd3d01e11902a524b0a8": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "9b648273a5b9e3c03ca0": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "8b9f977e147eaba22518": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "f7cf2ffbad124711d01a": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

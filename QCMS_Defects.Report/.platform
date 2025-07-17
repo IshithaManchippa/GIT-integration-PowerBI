@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "QCMS_Defects"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "dd71c0f0-d94e-422f-aac1-5870e80bc909"
+  }
+}

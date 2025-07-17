@@ -1,0 +1,37 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "6c6da9808f227fdbcde5",
+  "position": {
+    "x": 480.64602960969046,
+    "y": 25.841184387617766,
+    "z": 3000,
+    "height": 75.800807537012119,
+    "width": 322.15343203230151,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Ticket Details",
+                    "textStyle": {
+                      "fontSize": "36pt",
+                      "color": "#2e75b6"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

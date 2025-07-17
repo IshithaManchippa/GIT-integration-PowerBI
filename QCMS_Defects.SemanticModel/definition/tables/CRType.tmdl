@@ -1,0 +1,42 @@
+table CRType
+	lineageTag: 46436b87-f914-46de-858f-5bc8e7d27229
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: d096bdf4-b090-4315-bf64-0298cc253efb
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 9a5250c8-43fa-42cf-9d04-1557fc3ab331
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsActive
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c0f2799d-985a-49cf-9720-b3bce5b660d3
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CRType = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_CRType = Source{[Schema="dbo",Item="QC_M_CRType"]}[Data]
+				in
+				    dbo_QC_M_CRType
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,56 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBIDesktopVersion = 2.145.1105.0 (25.07)+decbc46fce458c5b8d5109d6f32a743f2ac949c8
+
+annotation PBI_QueryOrder = ["Browser","Environment","Root Cause","Client","Client Users","QCMS_DEFECTS","Refresh Date","Defect_Category","Defect_Status","Defect_Type","Defect_Priority","CRType","CRDETAILS"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table DateTableTemplate_d40a318b-77f8-4c6e-abb5-8cbb44026ccc
+ref table Browser
+ref table Environment
+ref table 'Root Cause'
+ref table Client
+ref table LocalDateTable_6f7e1d77-2605-499d-b59a-65219b39761e
+ref table LocalDateTable_1ea5dfa1-2ec2-4cb4-a5f4-5a27dc62c1a0
+ref table LocalDateTable_ed67747f-54ce-48c0-bcbd-d348d0ac7cff
+ref table 'Client Users'
+ref table LocalDateTable_8525b2f5-ce6e-4d81-8ad7-a3d2498aeaf7
+ref table QCMS_DEFECTS
+ref table LocalDateTable_fd9fdaee-bc76-41b2-a3cc-b604144f682c
+ref table LocalDateTable_95dab058-7bef-467c-aa3a-468fcc5f43cc
+ref table 'Refresh Date'
+ref table LocalDateTable_058c1858-a9c9-4465-926d-fc045fc3c125
+ref table UniqueDefects
+ref table LocalDateTable_7738b69f-688b-4efd-a4b4-e0ae1117fc7e
+ref table qcms_defects_deduped
+ref table LocalDateTable_fcdfc2f4-1739-4384-b263-976aae2021eb
+ref table Defect_Category
+ref table Defect_Status
+ref table Defect_Type
+ref table Defect_Priority
+ref table CRType
+ref table CRDETAILS
+ref table LocalDateTable_6253822f-3485-47eb-848c-51a96dd4650e
+ref table LocalDateTable_bc64ee08-62b6-4ebd-b3fb-e06bf4182f88
+ref table LocalDateTable_c1985434-9928-4163-927e-ad02ca08ff88
+ref table LocalDateTable_32cc8e29-cfca-4307-b228-1579ed0f60d7
+ref table LocalDateTable_707dd836-0b19-4bc6-aa14-ad908976d960
+ref table LocalDateTable_00bddf69-2964-4bde-8d0f-ba6b25e03590
+ref table LocalDateTable_7da5a3b6-7b08-4fbf-84bc-3f4e37121901
+ref table LocalDateTable_6a363e2b-ae1b-44a5-9e85-643c0a3c0a5a
+ref table LocalDateTable_cea2ab36-705d-458d-9c6a-286208eb1043
+ref table LocalDateTable_1276b164-b51a-4aac-b3e0-8b745bca7a5f
+ref table LocalDateTable_43e4af2b-7531-4f83-a6e6-1113a58de760
+ref table LocalDateTable_981fe801-d634-4a5c-bab4-dba9e48966e7
+
+ref cultureInfo en-US
+

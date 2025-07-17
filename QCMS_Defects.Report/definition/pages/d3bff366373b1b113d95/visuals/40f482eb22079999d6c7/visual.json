@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "40f482eb22079999d6c7",
+  "position": {
+    "x": 721.03359173126614,
+    "y": 284.4444444444444,
+    "z": 6000,
+    "height": 398.58457183297963,
+    "width": 538.09178855629148,
+    "tabOrder": 6000
+  },
+  "visualGroup": {
+    "displayName": "Charts",
+    "groupMode": "ScaleMode",
+    "objects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F4F4F4'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "30D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+EVALUATE(
+    DISTINCTCOUNT('QCMS_DEFECTS'[DefectId])
+)
+

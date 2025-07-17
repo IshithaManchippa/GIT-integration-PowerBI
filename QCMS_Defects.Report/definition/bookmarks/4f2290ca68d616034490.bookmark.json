@@ -1,0 +1,808 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/1.4.0/schema.json",
+  "displayName": "ResolvedTickets by Resource",
+  "name": "4f2290ca68d616034490",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "2170d350b4e06d64bda0",
+      "c97ed7d7c7da42794255",
+      "247bc8d35b5ac588b4bf",
+      "697aa7ae7a3819900167",
+      "b550e8201c3180be0460",
+      "21c235e891bb0da6a779",
+      "1e32510ecb610e0921a9",
+      "f7c5578a862e70248bd5",
+      "9c2d3c1169a01048b5a8",
+      "88bcb99a2d64b916086c"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "d74af4050dfbd553e45f",
+    "filters": {
+      "byExpr": [
+        {
+          "name": "14b9245edab9688aea52",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "QCMS_DEFECTS"
+                }
+              },
+              "Property": "ReleaseName"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "d74af4050dfbd553e45f": {
+        "visualContainers": {
+          "ff0d8ba8a2661e19dfaa": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "09ae813bf4882d0ce9d8": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "89b6161a22299605f0c6": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "247bc8d35b5ac588b4bf": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8390c1c611530212c208",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b5a3729f94d51592b9c2",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Avg Final Resolution Time"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "clusteredBarChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Avg Final Resolution Time"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "697aa7ae7a3819900167": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "7c7b0b7fbee578f3a9bb",
+                  "type": "Categorical",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "subquery",
+                        "Expression": {
+                          "Subquery": {
+                            "Query": {
+                              "Version": 2,
+                              "From": [
+                                {
+                                  "Name": "q",
+                                  "Entity": "QCMS_DEFECTS",
+                                  "Type": 0
+                                }
+                              ],
+                              "Select": [
+                                {
+                                  "Column": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "q"
+                                      }
+                                    },
+                                    "Property": "AssignedTo"
+                                  },
+                                  "Name": "field"
+                                }
+                              ],
+                              "OrderBy": [
+                                {
+                                  "Direction": 2,
+                                  "Expression": {
+                                    "Measure": {
+                                      "Expression": {
+                                        "SourceRef": {
+                                          "Source": "q"
+                                        }
+                                      },
+                                      "Property": "Resolved Tickets"
+                                    }
+                                  }
+                                }
+                              ],
+                              "Top": 10
+                            }
+                          }
+                        },
+                        "Type": 2
+                      },
+                      {
+                        "Name": "q",
+                        "Entity": "QCMS_DEFECTS",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "In": {
+                            "Expressions": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "q"
+                                    }
+                                  },
+                                  "Property": "AssignedTo"
+                                }
+                              }
+                            ],
+                            "Table": {
+                              "SourceRef": {
+                                "Source": "subquery"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "902f794d41c3cce2c817",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Resolved Tickets"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "barChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Resolved Tickets"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "b550e8201c3180be0460": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e218f305a6ea9f93d484",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "174e3a01501a2a1506a5",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Resolved Tickets"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e54589df7e3fed062328",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Avg Final Resolution Time"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineStackedColumnComboChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Resolved Tickets"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "21c235e891bb0da6a779": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "834a72c15c4a326c6a43",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "377b7f36e1c3fe799e5b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "QCMS_DEFECTS"
+                            }
+                          },
+                          "Property": "AgingDays"
+                        }
+                      },
+                      "Function": 2
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "QCMS_DEFECTS"
+                            }
+                          },
+                          "Property": "AgingDays"
+                        }
+                      },
+                      "Function": 2
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "AssignedTo"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "c5e9bbc8b91fd5afbb31": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "962ff258d48599e034f8",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Year"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "q",
+                                "Entity": "QCMS_DEFECTS",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "q"
+                                            }
+                                          },
+                                          "Property": "Created_Year"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "2025L"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Year"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "680be4148002d079bef7": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "321a85fb5d69c2e3dae1",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Month_Year"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_Month_Year"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "63b3de72a9873f31f143": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "fb2f38e1ba93a83bda17",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_WeekOfMonth"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Created_WeekOfMonth"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "4afc55cc33473f200bce": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "3992f59bf9432e14da8c",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Formatted_Created_Date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "QCMS_DEFECTS"
+                        }
+                      },
+                      "Property": "Formatted_Created_Date"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "d532aa65a74743fc756d": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "1550c9118a3e377b0a43": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "9868ff6f5e2b03c154b6": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "f27c5b30007a4081e169": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "534aa1e5e082e09928dc": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "1e32510ecb610e0921a9": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "f7c5578a862e70248bd5": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "9c2d3c1169a01048b5a8": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "88bcb99a2d64b916086c": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

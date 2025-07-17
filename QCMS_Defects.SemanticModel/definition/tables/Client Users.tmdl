@@ -1,0 +1,155 @@
+table 'Client Users'
+	lineageTag: 8032f32f-56f0-46e8-9197-c12ea839933d
+
+	column UserCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 8de2594d-ff8d-45d3-b93b-5f7250ad5a05
+		summarizeBy: sum
+		sourceColumn: UserCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column ApplicationID
+		dataType: string
+		lineageTag: f626c772-4e75-41bf-a462-3cc85e0bf196
+		summarizeBy: none
+		sourceColumn: ApplicationID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UserID
+		dataType: string
+		lineageTag: 0938ce1a-44fd-4115-a829-47a337d57609
+		summarizeBy: none
+		sourceColumn: UserID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UserName
+		dataType: string
+		lineageTag: aa9a835e-11e1-4bef-97f9-0367d3c9e367
+		summarizeBy: none
+		sourceColumn: UserName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: a942a1a8-fd37-4c31-81a1-dfd6ad89e741
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstName
+		dataType: string
+		lineageTag: 850ebba5-e20d-48b4-8a57-d54fc7b3ed8b
+		summarizeBy: none
+		sourceColumn: FirstName
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastName
+		dataType: string
+		lineageTag: a5d4dd70-000a-436d-818f-b9d92df2d3c7
+		summarizeBy: none
+		sourceColumn: LastName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: fee86024-cfd8-4747-aad6-2ec5c2ff505c
+		summarizeBy: none
+		sourceColumn: DOB
+
+		variation Variation
+			isDefault
+			relationship: c752c02a-1c20-4117-8a37-2ba3db4ef749
+			defaultHierarchy: LocalDateTable_8525b2f5-ce6e-4d81-8ad7-a3d2498aeaf7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DBUserIds
+		dataType: string
+		lineageTag: 88a5b052-699f-4501-8dd0-d0ee139847f9
+		summarizeBy: none
+		sourceColumn: DBUserIds
+
+		annotation SummarizationSetBy = Automatic
+
+	column MachineNames
+		dataType: string
+		lineageTag: c143736d-4ab3-4b22-bd35-fc506a948641
+		summarizeBy: none
+		sourceColumn: MachineNames
+
+		annotation SummarizationSetBy = Automatic
+
+	column TFSUserIds
+		dataType: string
+		lineageTag: 21950695-aac9-4cf6-8ea5-ce057e08f687
+		summarizeBy: none
+		sourceColumn: TFSUserIds
+
+		annotation SummarizationSetBy = Automatic
+
+	column PermittedClients
+		dataType: string
+		lineageTag: f161ba32-b05d-4b99-b7a0-3440b26bd254
+		summarizeBy: none
+		sourceColumn: PermittedClients
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeZone
+		dataType: string
+		lineageTag: bd2aa973-ecb6-4592-ada5-1ca0729e834b
+		summarizeBy: none
+		sourceColumn: TimeZone
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organaization
+		dataType: string
+		lineageTag: 0bff9a60-360f-4927-8618-82cea865379a
+		summarizeBy: none
+		sourceColumn: Organaization
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsDeploymentUser
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3ce5dd17-e5bf-4e47-bd1f-77bd923d4329
+		summarizeBy: none
+		sourceColumn: IsDeploymentUser
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsTimeSheetRequired
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b030f17b-cad9-4bfd-a2f5-3400922af25f
+		summarizeBy: none
+		sourceColumn: IsTimeSheetRequired
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Client Users' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_Client_Users = Source{[Schema="dbo",Item="QC_Client_Users"]}[Data]
+				in
+				    dbo_QC_Client_Users
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

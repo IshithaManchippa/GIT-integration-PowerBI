@@ -1,0 +1,117 @@
+table UniqueDefects
+	lineageTag: c208b670-dfeb-4bc7-8680-efde4ea4331c
+
+	column DefectId
+		formatString: 0
+		lineageTag: 190cdb43-103b-44b8-8feb-b3f4f598193a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DefectId]
+
+		annotation SummarizationSetBy = User
+
+	column EnvironmentId
+		formatString: 0
+		lineageTag: b641d330-91fa-4fdd-a918-b83dc83e7722
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [EnvironmentId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		lineageTag: 3eb875e5-c2f1-400f-83d2-3fad94a5ad6d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Severity
+		lineageTag: b2f06eed-70e6-4d45-b173-81fa8519fa02
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Severity]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkingDays
+		formatString: 0
+		lineageTag: f888ca75-898e-45e9-8a56-526f0cb46609
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [WorkingDays]
+
+		annotation SummarizationSetBy = Automatic
+
+	column SLA_Status
+		lineageTag: da8b98f7-2856-45a1-8100-819b62abb299
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [SLA_Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Resolution Working Days'
+		lineageTag: 48d7e4e8-dd62-4b19-8629-2b9a543e166c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Resolution Working Days]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CreatedDate
+		formatString: General Date
+		lineageTag: 628b8f4a-fd36-4a22-84ad-241e7ad36b08
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [CreatedDate]
+
+		variation Variation
+			isDefault
+			relationship: cbc5173d-df65-4b92-91fe-5a968442617f
+			defaultHierarchy: LocalDateTable_7738b69f-688b-4efd-a4b4-e0ae1117fc7e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssignedTo
+		lineageTag: 656714dd-1fe8-4b23-8461-fdc3bb0fabbc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [AssignedTo]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UniqueDefects = calculated
+		mode: import
+		source = ```
+				
+				VAR Base =
+				    ADDCOLUMNS (
+				        SUMMARIZE('qcms_defects', 'qcms_defects'[DefectId]),
+				        "MinEnvId",
+				            CALCULATE(
+				                MIN('qcms_defects'[EnvironmentId])
+				            )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        NATURALINNERJOIN(Base, 'qcms_defects'),
+				        "DefectId", 'qcms_defects'[DefectId],
+				        "EnvironmentId", 'qcms_defects'[EnvironmentId],
+				        "Status", 'qcms_defects'[Status],
+				        "Severity", 'qcms_defects'[Severity],
+				        "WorkingDays", 'qcms_defects'[WorkingDays],
+				        "SLA_Status", 'qcms_defects'[SLA_Status],
+				        "Resolution Working Days", 'qcms_defects'[Resolution Working Days],
+				        "CreatedDate", 'qcms_defects'[CreatedDate],
+				        "AssignedTo", 'qcms_defects'[AssignedTo]
+				        -- Add more columns as needed
+				    )
+				
+				```
+
+	annotation PBI_Id = f81a4bb690474a2e9f908802bf70beec
+

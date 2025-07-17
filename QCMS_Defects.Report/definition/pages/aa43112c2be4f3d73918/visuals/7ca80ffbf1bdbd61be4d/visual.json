@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "7ca80ffbf1bdbd61be4d",
+  "position": {
+    "x": 10,
+    "y": 0,
+    "z": 0,
+    "height": 220,
+    "width": 280
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QCMS_DEFECTS"
+                    }
+                  },
+                  "Property": "CreatedDate"
+                }
+              },
+              "queryRef": "QCMS_DEFECTS.CreatedDate",
+              "nativeQueryRef": "CreatedDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QCMS_DEFECTS"
+                    }
+                  },
+                  "Property": "CreatedDateTime_UTC"
+                }
+              },
+              "queryRef": "QCMS_DEFECTS.CreatedDateTime_UTC",
+              "nativeQueryRef": "CreatedDateTime_UTC"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

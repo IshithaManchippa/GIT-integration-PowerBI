@@ -1,0 +1,157 @@
+table Client
+	lineageTag: 9e6c7462-978d-49b8-b3b8-19c173923b68
+
+	column ClientID
+		dataType: int64
+		formatString: 0
+		lineageTag: 34533fb0-dcc5-45e3-805d-297711a1c517
+		summarizeBy: none
+		sourceColumn: ClientID
+
+		annotation SummarizationSetBy = User
+
+	column ClientName
+		dataType: string
+		lineageTag: f1aaee71-5463-4c4c-af9e-c6b5aec6d771
+		summarizeBy: none
+		sourceColumn: ClientName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientAddress
+		dataType: string
+		lineageTag: bdb36601-04d3-4a96-aa79-d91c8df1227c
+		summarizeBy: none
+		sourceColumn: ClientAddress
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsActive
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f76d63ac-bca1-451d-8a1d-3dd49acb2601
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		annotation SummarizationSetBy = Automatic
+
+	column FirstProductDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 37ebe248-0afe-4262-b5ba-3e4d63415c2d
+		summarizeBy: none
+		sourceColumn: FirstProductDate
+
+		variation Variation
+			isDefault
+			relationship: 24bcd408-c67c-440f-9a4f-d8347136cbb8
+			defaultHierarchy: LocalDateTable_6f7e1d77-2605-499d-b59a-65219b39761e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CreatedBy
+		dataType: string
+		lineageTag: b147ffc7-3852-4cc3-9361-5226539224c8
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 335362d8-890f-41ac-8f24-22b2e0536989
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: 21caf546-e2e5-44b4-bf60-cbbda1fb6038
+			defaultHierarchy: LocalDateTable_1ea5dfa1-2ec2-4cb4-a5f4-5a27dc62c1a0.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: 700a29a0-be1f-4004-ac61-f81bbe1f64de
+		summarizeBy: none
+		sourceColumn: ModifiedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 067a23a9-b756-4117-be91-91b4ba7b0f0c
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		variation Variation
+			isDefault
+			relationship: 8b538793-e066-4713-9b70-3f3c47117bc9
+			defaultHierarchy: LocalDateTable_ed67747f-54ce-48c0-bcbd-d348d0ac7cff.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column StreamID
+		dataType: int64
+		formatString: 0
+		lineageTag: e9840755-9fea-4aee-afb7-4016ca1008ca
+		summarizeBy: count
+		sourceColumn: StreamID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comments
+		dataType: string
+		lineageTag: 21e5295c-d657-4f91-a8ed-b08a836bb020
+		summarizeBy: none
+		sourceColumn: Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsAutomation
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f74e2d4c-31b9-4760-b73d-8422fc578149
+		summarizeBy: none
+		sourceColumn: IsAutomation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 1dad53c7-7251-4f0a-8b1c-f31af701237c
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExternalCustomerId
+		dataType: int64
+		formatString: 0
+		lineageTag: c5481997-6357-437c-971a-dcb4c21558ac
+		summarizeBy: count
+		sourceColumn: ExternalCustomerId
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Client-0772f389-9bd8-428d-bacd-2e583b11a831 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_Client = Source{[Schema="dbo",Item="QC_M_Client"]}[Data]
+				in
+				    dbo_QC_M_Client
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "b6ef31f5d8dd6238ef0b",
+  "displayName": "Ticket Volume",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "256L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "b336002abb133ee4a451",
+      "target": "2a33943590f9ffb45cea",
+      "type": "NoFilter"
+    },
+    {
+      "source": "a01e8a2f0305e339b03e",
+      "target": "2a33943590f9ffb45cea",
+      "type": "NoFilter"
+    },
+    {
+      "source": "38633b7c256bf8e3b9d5",
+      "target": "2a33943590f9ffb45cea",
+      "type": "NoFilter"
+    },
+    {
+      "source": "31182dbf4c65c6579257",
+      "target": "3ce5cb39fa71ef85207f",
+      "type": "NoFilter"
+    },
+    {
+      "source": "5514889e76dd4ab0c959",
+      "target": "2a33943590f9ffb45cea",
+      "type": "NoFilter"
+    },
+    {
+      "source": "b336002abb133ee4a451",
+      "target": "c8db7d097158e3911204",
+      "type": "NoFilter"
+    }
+  ]
+}

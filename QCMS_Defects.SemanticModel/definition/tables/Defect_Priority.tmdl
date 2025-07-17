@@ -1,0 +1,41 @@
+table Defect_Priority
+	lineageTag: 0b34df14-286a-4f29-9b32-65c6b86004a7
+
+	column PriorityId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7003fe94-ca8f-4cca-8d7e-38d3835370eb
+		summarizeBy: none
+		sourceColumn: PriorityId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: string
+		lineageTag: d80d9183-f701-4df7-be69-93d4c408a6f9
+		summarizeBy: none
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: e2978b02-a7b5-484a-bb38-a628d534246f
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Defect_Priority = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_Defect_Priority = Source{[Schema="dbo",Item="QC_M_Defect_Priority"]}[Data]
+				in
+				    dbo_QC_M_Defect_Priority
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

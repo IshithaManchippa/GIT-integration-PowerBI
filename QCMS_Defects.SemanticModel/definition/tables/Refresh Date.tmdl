@@ -1,0 +1,29 @@
+table 'Refresh Date'
+	lineageTag: 588c89b6-7d1b-4988-9031-e2f1322c14b4
+
+	column 'Refresh Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f2f9a528-a926-47bc-959f-14ecbeed06b1
+		summarizeBy: none
+		sourceColumn: Refresh Date
+
+		variation Variation
+			isDefault
+			relationship: bd200f46-7b6b-4fdc-ad4c-32aad4fa3d24
+			defaultHierarchy: LocalDateTable_058c1858-a9c9-4465-926d-fc045fc3c125.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Refresh Date' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS", [Query="select Getdate() as [Refresh Date]"])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,952 @@
+table QCMS_DEFECTS
+	lineageTag: 65896a61-8458-4f5e-a8d2-75c5ff8f7e28
+
+	measure Pending = ```
+			
+			IF(ISBLANK(CALCULATE([Total Defects],QCMS_DEFECTS[Status]<>"Closed")),0,CALCULATE([Total Defects],'QCMS_DEFECTS'[Status]<>"Closed"))
+			
+			```
+		formatString: 0
+		lineageTag: c4400d96-3ef6-4da0-8b58-fd94cfc20a8e
+
+	measure Measure = RELATED('Environment'[Environemnt])
+		lineageTag: c1e8dfbc-0d71-4858-ad4b-4e1cd6f54e49
+
+	measure 'Tickets >7 Days' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[Status] = "Open",
+			        'qcms_defects'[AgingDays] > 7,
+			        'qcms_defects'[AgingDays] <= 14
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 481febd0-14b3-4f52-8b6e-15bb22e514fa
+
+	measure 'Tickets >14 Days' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[Status] = "Open",
+			        'qcms_defects'[AgingDays] > 14,
+			        'qcms_defects'[AgingDays] <= 30
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: fd1c6eb6-1928-46a5-9314-f888e5564c92
+
+	measure 'Tickets >30 Days' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[Status] = "Open",
+			        'qcms_defects'[AgingDays] > 30
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: fe083797-e612-48ec-85ff-dcca1cda34ec
+
+	measure 'Total Open Defects' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[Status] = "Open"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 0bd2aa59-ec01-45d8-8529-327dbc97f9d5
+
+	measure 'Total Defects' =
+			--COUNT(Defects[DefectId])
+			Var TD = COUNT(QCMS_DEFECTS[DefectId])
+			Return
+			IF(ISBLANK(TD),0,TD)
+		formatString: 0
+		lineageTag: 3d6acf71-6d7e-469e-9346-9536157e2bfd
+
+	measure 'Resolved Tickets' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('qcms_defects'[DefectId]),
+			    'qcms_defects'[Status] = "Closed"
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 719d3f84-41da-444a-bae8-3052519bae00
+
+	measure 'Avg Working Days Resolution Time' = ```
+			
+			AVERAGEX(
+			    FILTER(
+			        'qcms_defects',
+			        'qcms_defects'[Status] = "Closed" &&
+			        NOT(ISBLANK('qcms_defects'[CreatedDate])) &&
+			        NOT(ISBLANK('qcms_defects'[ModifiedDate]))
+			    ),
+			    VAR startDateTime = 'qcms_defects'[CreatedDate]
+			    VAR endDateTime = 'qcms_defects'[ModifiedDate]
+			    VAR allDates = 
+			        ADDCOLUMNS(
+			            CALENDAR(DATEVALUE(startDateTime), DATEVALUE(endDateTime)),
+			            "IsWeekday", WEEKDAY([Date], 2) <= 5
+			        )
+			    VAR workingDays =
+			        COUNTROWS(
+			            FILTER(allDates, [IsWeekday])
+			        )
+			    VAR firstDayFraction =
+			        IF(
+			            WEEKDAY(startDateTime, 2) <= 5,
+			            1 - (HOUR(startDateTime) + MINUTE(startDateTime)/60 + SECOND(startDateTime)/3600) / 24,
+			            0
+			        )
+			    VAR lastDayFraction =
+			        IF(
+			            WEEKDAY(endDateTime, 2) <= 5,
+			            (HOUR(endDateTime) + MINUTE(endDateTime)/60 + SECOND(endDateTime)/3600) / 24,
+			            0
+			        )
+			    VAR fullDays = MAX(0, workingDays - 2)
+			    RETURN
+			        fullDays + firstDayFraction + lastDayFraction
+			)
+			
+			```
+		lineageTag: 2a9dabaf-a048-45df-9d5a-f66482b520b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Avg_WorkingDays_ResolutionTime = ```
+			
+			AVERAGE('qcms_defects'[Resolution Working Days])
+			
+			```
+		lineageTag: 3d05cbbb-685a-47db-9ed8-2fa903501de0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Resolution Time by AssignedTo' = ```
+			
+			CALCULATE(
+			    AVERAGE('qcms_defects'[Resolution Working Days]),
+			    REMOVEFILTERS('qcms_defects'[DefectId])
+			)
+			
+			```
+		lineageTag: 98d17fdd-1194-4a85-84be-e73bce60c33f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SLA_Not Breached' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('qcms_defects'[DefectId]),
+			    'qcms_defects'[SLA_Status] = "Within SLA"
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 2dad71df-4faa-4ab3-ba16-4564cfaa54f5
+
+	measure 'SLA Breached Count' = ```
+			
+			COALESCE(
+			CALCULATE (
+			    COUNTROWS('qcms_defects'),
+			    'qcms_defects'[SLA_Status] = "Breached",
+			    FILTER (
+			        'qcms_defects',
+			        'qcms_defects'[EnvironmentId] =
+			            CALCULATE (
+			                MIN('qcms_defects'[EnvironmentId]),
+			                ALLEXCEPT('qcms_defects', 'qcms_defects'[DefectId])
+			            )
+			    )
+			),
+			0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b7833f06-5382-4383-9f82-fc337b7c0f20
+
+	measure 'Total SLA Tickets' = ```
+			
+			CALCULATE (
+			    COUNTROWS('qcms_defects'),
+			    'qcms_defects'[SLA_Status] IN {"Within SLA", "Breached"},
+			    FILTER (
+			        'qcms_defects',
+			        'qcms_defects'[EnvironmentId] =
+			            CALCULATE (
+			                MIN('qcms_defects'[EnvironmentId]),
+			                ALLEXCEPT('qcms_defects', 'qcms_defects'[DefectId])
+			            )
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 8e00ffcf-b6e6-49c3-aa30-a2c2426134dc
+
+	measure 'SLA Breach %' =
+			
+			DIVIDE([SLA Breached Count], [Total SLA Tickets], 0)
+		lineageTag: 07b10fce-8eb5-456a-9cf4-54442b2439b5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SLA Breaches Over Time' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('qcms_defects'[DefectId]),
+			    'qcms_defects'[SLA_Status] = "Breached"
+			)
+			
+			```
+		formatString: 0
+		lineageTag: caf8b7eb-0627-453f-98be-dc157e1ecc1e
+
+	measure 'Avg Resolution Time by Priority' = ```
+			
+			AVERAGEX(
+			    FILTER(
+			        'qcms_defects',
+			        NOT(ISBLANK('qcms_defects'[Resolution Working Days])) &&
+			        'qcms_defects'[Status] = "Closed"
+			    ),
+			    'qcms_defects'[Resolution Working Days]
+			)
+			
+			```
+		lineageTag: d9533a09-b628-4c43-8a80-3cb1572e0528
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SLA Breach - Critical' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[SLA_Status] = "Breached",
+			        'QCMS_DEFECTS'[Severity] = "Critical"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 00bc68bb-6d99-4240-9fe6-966aab11a21b
+
+	measure 'SLA Breach - High' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[SLA_Status] = "Breached",
+			        'QCMS_DEFECTS'[Severity] = "High"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 837ef11e-c0d3-4330-91c9-ca9572bb95e2
+
+	measure 'SLA Breach - Medium' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[SLA_Status] = "Breached",
+			        'QCMS_DEFECTS'[Severity] = "Medium"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: db9b4946-acd9-4ad8-88f2-d8b716b0716b
+
+	measure 'SLA Breach - Low' = ```
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT('qcms_defects'[DefectId]),
+			        'qcms_defects'[SLA_Status] = "Breached",
+			        'QCMS_DEFECTS'[Severity] = "Low"
+			    ),
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 591faec4-c981-41a2-8945-c11af925fd99
+
+	measure 'Avg Final Resolution Time' = ```
+			
+			AVERAGEX(
+			    FILTER(
+			        'qcms_defects',
+			        NOT(ISBLANK('qcms_defects'[Final Resolution Working Days]))
+			    ),
+			    'qcms_defects'[Final Resolution Working Days]
+			)
+			
+			```
+		lineageTag: ae75f158-e71f-426d-9e0f-92051d9de71f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unique Tickets Count' = ```
+			
+			CALCULATE(
+			    DISTINCTCOUNT('qcms_defects'[DefectId])
+			)
+			
+			```
+		formatString: 0
+		lineageTag: e7138117-e71a-4567-ac3a-b0fb8d637b61
+
+	measure 'Distinct Tickets' = ```
+			
+			DISTINCT('qcms_defects'[DefectId])
+			
+			```
+		formatString: 0
+		lineageTag: 0a957346-ebc1-47c1-859c-be4ed72bef42
+
+	column DefectId
+		dataType: int64
+		formatString: 0
+		lineageTag: 248dd5b5-383b-465a-b890-8945ff5ee31a
+		summarizeBy: none
+		sourceColumn: DefectId
+
+		annotation SummarizationSetBy = User
+
+	column StreamName
+		dataType: string
+		lineageTag: b256c09e-ea4e-4c52-877a-3b299fb86b74
+		summarizeBy: none
+		sourceColumn: StreamName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientId
+		dataType: int64
+		formatString: 0
+		lineageTag: f31ba0e5-7173-4242-8d64-ddea4141517d
+		summarizeBy: none
+		sourceColumn: ClientId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReleaseId
+		dataType: int64
+		formatString: 0
+		lineageTag: 2632fb61-bad0-4028-b35e-0c6b30ddbabb
+		summarizeBy: count
+		sourceColumn: ReleaseId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AimsIncident
+		dataType: string
+		lineageTag: d917ca70-4f9e-4bfa-a27d-f71226dce754
+		summarizeBy: none
+		sourceColumn: AimsIncident
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReleaseName
+		dataType: string
+		lineageTag: 8a12eeea-2ae4-4d1d-81c3-15080c353b6d
+		summarizeBy: none
+		sourceColumn: ReleaseName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CRNo
+		dataType: string
+		lineageTag: 0205971d-395a-4ca9-b82c-27e84b771a9e
+		summarizeBy: none
+		sourceColumn: CRNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DefectType
+		dataType: string
+		lineageTag: 7da09959-dd6e-4fd7-bdf0-b3dda88c91a2
+		summarizeBy: none
+		sourceColumn: DefectType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Severity
+		dataType: string
+		lineageTag: 3ef4b2a8-20d6-4204-b200-b111cbfd6801
+		summarizeBy: none
+		sourceColumn: Severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: string
+		lineageTag: e66e546b-c776-484b-b526-c0afef44f662
+		summarizeBy: none
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 0d9cddf4-f44a-4e7b-b597-f2c04d0e5213
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 84509279-3957-4e17-b6ba-afcae26f8bfa
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnvironmentId
+		dataType: int64
+		formatString: 0
+		lineageTag: e59776a0-b50e-4777-8a51-cce867c3e706
+		summarizeBy: none
+		sourceColumn: EnvironmentId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e1a0fbc8-9d79-4776-9df7-eab55933a75a
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		variation Variation
+			isDefault
+			relationship: dd4d2462-6381-4dc7-8287-9b2ee1b46813
+			defaultHierarchy: LocalDateTable_fd9fdaee-bc76-41b2-a3cc-b604144f682c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReasonName
+		dataType: string
+		lineageTag: a02f0731-2d9e-436b-812b-38876d76f18e
+		summarizeBy: none
+		sourceColumn: ReasonName
+
+		annotation SummarizationSetBy = Automatic
+
+	column RootCause
+		dataType: string
+		lineageTag: bd2b5e00-28a4-41e4-aa55-e0c47abbf81a
+		summarizeBy: none
+		sourceColumn: RootCause
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssignedQaUser
+		dataType: string
+		lineageTag: 80f1c5d7-3add-41e6-b7e2-31717afed856
+		summarizeBy: none
+		sourceColumn: AssignedQaUser
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgingDays = ```
+			
+			IF(
+			    AND(
+			        QCMS_DEFECTS[Status] <> "", 
+			        QCMS_DEFECTS[Status] <> ""
+			    ),
+			    VAR StartDate = QCMS_DEFECTS[CreatedDate]
+			    VAR EndDate = TODAY()
+			    VAR TotalDays = DATEDIFF(StartDate, EndDate, DAY)
+			    VAR WeekDays =
+			        COUNTROWS(
+			            FILTER(
+			                ADDCOLUMNS(
+			                    CALENDAR(StartDate, EndDate),
+			                    "IsWeekday", 
+			                    WEEKDAY([Date], 2) < 6 -- Monday = 1, Friday = 5
+			                ),
+			                [IsWeekday]
+			            )
+			        )
+			    RETURN
+			        WeekDays,
+			    BLANK()
+			)
+			
+			```
+		formatString: 0
+		lineageTag: df641e95-8cf1-4e5b-aa84-8ab2b2acc3cd
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 467b88ce-96a2-420e-b64e-2027da3a3cc3
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssignedTo
+		dataType: string
+		lineageTag: 57dd74f6-bf9f-4d5b-b163-6037ec9f7abf
+		summarizeBy: none
+		sourceColumn: AssignedTo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: 48d5f743-ac75-49b0-8e1c-b8bfd2250327
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 75615243-1da2-499a-b571-1ca6cd394298
+		summarizeBy: none
+		sourceColumn: ModifiedDate
+
+		variation Variation
+			isDefault
+			relationship: a599d660-5574-42f8-869f-61a4a3dad859
+			defaultHierarchy: LocalDateTable_95dab058-7bef-467c-aa3a-468fcc5f43cc.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CR Name'
+		dataType: string
+		lineageTag: 696ddb11-f4f1-4fb7-981f-446f2c19e481
+		summarizeBy: none
+		sourceColumn: CR Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: 6a6021e6-a353-43b3-9d46-28f09fda1473
+		summarizeBy: none
+		sourceColumn: ModifiedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column RejectReasonId
+		dataType: int64
+		formatString: 0
+		lineageTag: c4838e8d-54fc-48f8-ad39-7b5605a576cf
+		summarizeBy: count
+		sourceColumn: RejectReasonId
+
+		annotation SummarizationSetBy = Automatic
+
+	column IssueTypeId
+		dataType: int64
+		formatString: 0
+		lineageTag: a71b94bc-3fef-4bae-9f3e-453942e6db9d
+		summarizeBy: count
+		sourceColumn: IssueTypeId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: e610db65-ef99-47ea-bb5e-475ff7c2dc10
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column Formatted_Created_Date = FORMAT(QCMS_DEFECTS[CreatedDate],"DD-MM-YYYY")
+		dataType: string
+		lineageTag: ec184593-a225-430e-9103-108b4fed6b3e
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created_Month_Year = ```
+			FORMAT(QCMS_DEFECTS[CreatedDate], "MMM YYYY")
+			
+			```
+		lineageTag: 34eabf6a-ad93-47de-be38-686bab79c69f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created_WeekOfMonth = ```
+			
+			INT( (DAY(QCMS_DEFECTS[CreatedDate]) - 1) / 7 ) + 1
+			
+			```
+		formatString: 0
+		lineageTag: c4288427-3844-42a4-8d1b-c850f91d5a26
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created_Year = ```
+			YEAR(QCMS_DEFECTS[CreatedDate])
+			
+			```
+		formatString: 0
+		lineageTag: f9540c8a-6873-4f69-b6f3-2d5f3c437ca5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Aging Bucket' = ```
+			
+			SWITCH(
+			    TRUE(),
+			    'qcms_defects'[Status] <> "Open", "Closed",
+			    'qcms_defects'[AgingDays] > 30, ">30 Days",
+			    'qcms_defects'[AgingDays] > 14, ">14 Days",
+			    'qcms_defects'[AgingDays] > 7, ">7 Days",
+			    "<=7 Days"
+			)
+			
+			```
+		lineageTag: 55577bb9-79b8-4836-9d65-165694ae670d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Resolution Working Days' = ```
+			
+			IF(
+			    'qcms_defects'[Status] = "Closed" &&
+			    NOT(ISBLANK('qcms_defects'[CreatedDate])) &&
+			    NOT(ISBLANK('qcms_defects'[ModifiedDate])),
+			    
+			    VAR startDateTime = 'qcms_defects'[CreatedDate]
+			    VAR endDateTime = 'qcms_defects'[ModifiedDate]
+			    
+			    VAR allDates = 
+			        ADDCOLUMNS(
+			            CALENDAR(DATEVALUE(startDateTime), DATEVALUE(endDateTime)),
+			            "IsWeekday", WEEKDAY([Date], 2) <= 5
+			        )
+			    
+			    VAR workingDays =
+			        COUNTROWS(
+			            FILTER(allDates, [IsWeekday])
+			        )
+			    
+			    VAR firstDayFraction =
+			        IF(
+			            WEEKDAY(startDateTime, 2) <= 5,
+			            1 - (HOUR(startDateTime) + MINUTE(startDateTime)/60 + SECOND(startDateTime)/3600) / 24,
+			            0
+			        )
+			    
+			    VAR lastDayFraction =
+			        IF(
+			            WEEKDAY(endDateTime, 2) <= 5,
+			            (HOUR(endDateTime) + MINUTE(endDateTime)/60 + SECOND(endDateTime)/3600) / 24,
+			            0
+			        )
+			    
+			    VAR fullDays = MAX(0, workingDays - 2)
+			    
+			    RETURN
+			        fullDays + firstDayFraction + lastDayFraction,
+			
+			    BLANK()  -- If not Closed or dates are blank, return blank
+			)
+			
+			```
+		lineageTag: 4a180267-6ba8-4f28-96d9-8e23e987f30c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Created_Time = ```
+			FORMAT('qcms_defects'[CreatedDate], "hh:mm:ss AM/PM")
+			
+			```
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 75aba0cd-f8c0-44ae-b041-63a24d4cf27e
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column Modified_Time = ```
+			FORMAT('QCMS_DEFECTS'[ModifiedDate], "hh:mm:ss AM/PM")
+			
+			```
+		lineageTag: c3a69937-2f2b-485e-a1a1-1b1b1f198b6b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkingDays = ```
+			
+			VAR startDate = 'qcms_defects'[CreatedDate]
+			VAR endDate =
+			    IF(
+			        'qcms_defects'[Status] = "Closed",
+			        'qcms_defects'[ModifiedDate],
+			        TODAY()
+			    )
+			VAR dateTable =
+			    ADDCOLUMNS(
+			        CALENDAR(startDate, endDate),
+			        "IsWeekday", WEEKDAY([Date], 2) <= 5
+			    )
+			RETURN
+			    COUNTROWS(FILTER(dateTable, [IsWeekday]))
+			
+			```
+		formatString: 0
+		lineageTag: 39cc58ff-1a28-41ef-88f9-e35d9e321fac
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column SLA_Status = ```
+			
+			SWITCH(
+			    TRUE(),
+			    'qcms_defects'[Status] <> "Open", "NA",
+			
+			    'qcms_defects'[Severity] = "Critical" && 'qcms_defects'[WorkingDays] > 0, "Breached",
+			    'qcms_defects'[Severity] = "High" && 'qcms_defects'[WorkingDays] > 1, "Breached",
+			    'qcms_defects'[Severity] = "Medium" && 'qcms_defects'[WorkingDays] > 3, "Breached",
+			    'qcms_defects'[Severity] = "Low" && 'qcms_defects'[WorkingDays] > 5, "Breached",
+			
+			    "Within SLA"
+			)
+			
+			```
+		lineageTag: f88e2a2c-4ab7-42e0-ab49-da2266e8186e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Final Resolution Working Days' = ```
+			
+			VAR currentDefectId = 'qcms_defects'[DefectId]
+			VAR currentEnvId = 'qcms_defects'[EnvironmentId]
+			
+			VAR minEnvId = 
+			    CALCULATE(
+			        MIN('qcms_defects'[EnvironmentId]),
+			        ALLEXCEPT('qcms_defects', 'qcms_defects'[DefectId])
+			    )
+			
+			RETURN
+			    IF(
+			        currentEnvId = minEnvId,
+			        'qcms_defects'[Resolution Working Days],
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: 3a7cc3fc-2840-433f-8469-20537d7ecf28
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IsPrimaryDefectRow = ```
+			
+			IF(
+			    'qcms_defects'[EnvironmentId] =
+			        CALCULATE(
+			            MIN('qcms_defects'[EnvironmentId]),
+			            ALLEXCEPT('qcms_defects', 'qcms_defects'[DefectId])
+			        ),
+			    1,
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: ce7047ff-1bda-4788-8a09-56e41969092f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column UTC-4 = QCMS_DEFECTS[CreatedDate]+TIME(4,0,0)
+		formatString: General Date
+		lineageTag: e2f81c21-c614-44a7-aa00-7e340cc06880
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: cb6b3963-997b-4210-bd66-2b5416553a95
+			defaultHierarchy: LocalDateTable_43e4af2b-7531-4f83-a6e6-1113a58de760.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDateTime_UTC = ```
+			
+			VAR CreatedDT = QCMS_DEFECTS[CreatedDate]
+			VAR YearNum = YEAR(CreatedDT)
+			
+			// DST Start: 2nd Sunday in March
+			VAR March1 = DATE(YearNum, 3, 1)
+			VAR WeekDay_March1 = WEEKDAY(March1, 1)  // 1 = Sunday
+			VAR DSTStart = March1 + (14 - WeekDay_March1)  // 2nd Sunday
+			
+			// DST End: 1st Sunday in November
+			VAR Nov1 = DATE(YearNum, 11, 1)
+			VAR WeekDay_Nov1 = WEEKDAY(Nov1, 1)
+			VAR DSTEnd = Nov1 + (7 - WeekDay_Nov1)  // 1st Sunday
+			
+			// Determine if date is within DST
+			VAR IsDST = CreatedDT >= DSTStart && CreatedDT < DSTEnd
+			
+			RETURN
+			    CreatedDT + IF(IsDST, 4.0 / 24, 5.0 / 24)
+			
+			```
+		formatString: General Date
+		lineageTag: 56556c95-240c-4d0e-9160-6e4628701a4c
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 01ed063a-31e2-42f3-9fb5-4d7d741cab79
+			defaultHierarchy: LocalDateTable_981fe801-d634-4a5c-bab4-dba9e48966e7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category_final = ```
+			
+			VAR titleText = LOWER('QCMS_DEFECTS'[Title])
+			
+			VAR GroupedCategory =
+			    SWITCH(
+			        TRUE(),
+			        CONTAINSSTRING(titleText, "login") || CONTAINSSTRING(titleText, "authentication") || CONTAINSSTRING(titleText, "sign in"), "Login Issue",
+			        CONTAINSSTRING(titleText, "setup") || CONTAINSSTRING(titleText, "configuration") || CONTAINSSTRING(titleText, "preference"), "Setup Issue",
+			        CONTAINSSTRING(titleText, "data") || CONTAINSSTRING(titleText, "value") || CONTAINSSTRING(titleText, "missing"), "Data Issue",
+			        CONTAINSSTRING(titleText, "display") || CONTAINSSTRING(titleText, "alignment") || CONTAINSSTRING(titleText, "screen"), "UI/UX Issue",
+			        "Miscellaneous"
+			    )
+			
+			RETURN
+			    IF(
+			        ISBLANK('QCMS_DEFECTS'[Category]),
+			        GroupedCategory,
+			        'QCMS_DEFECTS'[Category]
+			    )
+			
+			```
+		lineageTag: e9b724af-0e0b-487e-8d10-3722f9ebb86c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RootCause_Final = ```
+			
+			IF(
+			    ISBLANK('QCMS_DEFECTS'[RootCause]),
+			    'QCMS_DEFECTS'[Category_final],
+			    'QCMS_DEFECTS'[RootCause]
+			)
+			
+			```
+		lineageTag: 9fed1508-8354-44c9-8fc8-f96f24b129ed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column RootCauseName_Final = ```
+			
+			IF(
+			    ISBLANK(RELATED('Root Cause'[RootCauseName])),
+			    'QCMS_DEFECTS'[Category_final],
+			    RELATED('Root Cause'[RootCauseName])
+			)
+			
+			```
+		lineageTag: 1220b0ea-aa93-4e1d-b844-e113118e0f8a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column DefectType_Final =
+			
+			IF(
+			    ISBLANK('QCMS_DEFECTS'[DefectType]),
+			    'QCMS_DEFECTS'[Category_final],
+			    'QCMS_DEFECTS'[DefectType]
+			)
+		lineageTag: 4b36f00f-b997-420e-b58d-f6edde214701
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssignedTo_Updated =
+			
+			IF('QCMS_DEFECTS'[AssignedTo]=="",
+			    "Not Defined",
+			    'QCMS_DEFECTS'[AssignedTo]
+			)
+		lineageTag: 7b5d9366-3351-44c4-be4f-03897d54a452
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition QCMS_DEFECTS = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS", [Query="/****** Script for SelectTopNRows command from SSMS  ******/#(lf)SELECT TOP (100000) QCD.[DefectId]#(lf)      ,ST.StreamName#(lf)      ,QCD.[ClientId]#(lf)      ,QCD.[ReleaseId]#(lf)#(tab)  ,[AimsIncident]#(lf)#(tab)  ,[Title]#(lf)#(tab)  ,QCR.ReleaseName#(lf)#(tab)  ,[CRNo]#(lf)#(tab)  ,CR.NAME AS 'CR Name'#(lf)#(tab)  ,DT.[DefectType]#(lf)#(tab)  ,DE.Severity#(lf)      ,PR.[Priority]#(lf)#(tab)  ,CT.Category#(lf)      ,DS.Status#(lf)#(tab)  ,QCD.[CreatedDate]#(lf)#(tab)  ,CONCAT(CB.FirstName,' ',CB.LastName) AS CreatedBy#(lf)#(tab)   ,QCD.[ModifiedDate]#(lf)#(tab)   ,CONCAT(MB.FirstName,' ',MB.LastName) AS ModifiedBy#(lf)      ,[RejectReasonId]#(lf)#(tab)  ,RR.ReasonName#(lf)      ,[IssueTypeId]#(lf)      ,[Source]#(lf)      ,[RootCause]#(lf)      ,[AssignedQaUser]  #(lf)#(tab)  ,CONCAT(CU.FirstName,' ',CU.LastName) AS AssignedTo#(lf)#(tab)  ,QCD.EnvironmentId#(lf)  FROM [QCMS].[dbo].[QC_Defects] (NOLOCK) QCD #(lf)  INNER JOIN [dbo].[QC_M_Release](NOLOCK) QCR ON QCD.ReleaseId = QCR.ReleaseId#(lf)  INNER JOIN [dbo].[CRDETAILS](NOLOCK) CR ON CR.ID = QCD.CRNo#(lf)  INNER JOIN [dbo].[QC_M_Stream] (NOLOCK) ST ON ST.StreamID=QCD.StreamId#(lf)  LEFT JOIN [dbo].[QC_M_Defect_Type] (NOLOCK) DT ON DT.DefTypeId=QCD.DefTypeId#(lf)  INNER JOIN [dbo].[QC_M_Defect_Status](NOLOCK) DS ON DS.StatusId=QCD.DefectStatusId#(lf)  INNER JOIN [dbo].[QC_M_Defect_Severity](NOLOCK) DE ON DE.SeverityId=QCD.SeverityId#(lf)  LEFT JOIN [dbo].[QC_M_Defect_Priority](NOLOCK) PR ON PR.PriorityId=QCD.PriorityId#(lf)  LEFT JOIN [dbo].[QC_M_Defect_Category](NOLOCK) CT ON CT.CategoryId=QCD.CategoryId#(lf)  LEFT JOIN [dbo].[QC_M_RejectReason](NOLOCK) RR ON RR.ReasonId=QCD.RejectReasonId#(lf)  LEFT JOIN [dbo].[QC_Client_Users] (NOLOCK) CU ON CU.UserID=QCD.AssignedTo#(lf)  LEFT JOIN [dbo].[QC_Client_Users] (NOLOCK) CB ON CB.UserID=QCD.CreatedBy#(lf)  LEFT JOIN [dbo].[QC_Client_Users] (NOLOCK) MB ON MB.UserID=QCD.ModifiedBy#(lf)   WHERE QCR.IsActive=1 AND CR.IsActive=1 #(lf)  AND QCD.[CreatedDate] >=getdate()-365 order by 1 desc"]),
+				    #"Split Column by Delimiter" = Table.ExpandListColumn(Table.TransformColumns(Source, {{"EnvironmentId", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "EnvironmentId"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"EnvironmentId", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

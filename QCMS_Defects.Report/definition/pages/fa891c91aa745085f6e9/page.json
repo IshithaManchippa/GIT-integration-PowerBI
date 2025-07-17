@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "fa891c91aa745085f6e9",
+  "displayName": "SLA Compliance",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "bd350ea03f9b1930c556",
+      "target": "7d3b7bb8e2648019e236",
+      "type": "DataFilter"
+    },
+    {
+      "source": "7172da7cb1909c3292cf",
+      "target": "7d3b7bb8e2648019e236",
+      "type": "DataFilter"
+    },
+    {
+      "source": "f11f1b0f3ec5542e4f1a",
+      "target": "7d3b7bb8e2648019e236",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c91f99e26adc973d0cb1",
+      "target": "d53cabb406fd7b7c9025",
+      "type": "NoFilter"
+    }
+  ]
+}

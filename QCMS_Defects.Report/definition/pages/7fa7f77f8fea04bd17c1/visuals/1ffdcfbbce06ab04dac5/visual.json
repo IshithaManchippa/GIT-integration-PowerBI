@@ -1,0 +1,88 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "1ffdcfbbce06ab04dac5",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1000,
+    "height": 720,
+    "width": 1280.5839416058395,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pythonVisual",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QCMS_DEFECTS"
+                    }
+                  },
+                  "Property": "Title"
+                }
+              },
+              "queryRef": "QCMS_DEFECTS.Title",
+              "nativeQueryRef": "Title"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QCMS_DEFECTS"
+                    }
+                  },
+                  "Property": "DefectId"
+                }
+              },
+              "queryRef": "QCMS_DEFECTS.DefectId",
+              "nativeQueryRef": "DefectId"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QCMS_DEFECTS"
+                    }
+                  },
+                  "Property": "DefectType"
+                }
+              },
+              "queryRef": "QCMS_DEFECTS.DefectType",
+              "nativeQueryRef": "DefectType"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'# The following code to create a dataframe and remove duplicated rows is always executed and acts as a preamble for your script: \n\n# dataset = pandas.DataFrame(DefectType, Title)\n# dataset = dataset.drop_duplicates()\n\n# Paste or type your script code here:\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\n# Function to classify ticket titles by keyword\ndef extract_keyword(text):\n    if isinstance(text, str):\n        text = text.lower()\n        if \"login\" in text:\n            return \"Login Issue\"\n        elif \"timeout\" in text:\n            return \"Timeout\"\n        elif \"error\" in text:\n            return \"General Error\"\n        elif \"access\" in text:\n            return \"Access Issue\"\n        elif \"slow\" in text or \"performance\" in text:\n            return \"Performance Issue\"\n        elif \"crash\" in text or \"fail\" in text:\n            return \"Crash/Failure\"\n        elif \"bug\" in text:\n            return \"Bug\"\n        elif \"not working\" in text:\n            return \"Not Working\"\n        elif \"freeze\" in text or \"hang\" in text:\n            return \"Freeze/Hang\"\n        else:\n            return \"Other\"\n    else:\n        return \"Unknown\"\n\n# Apply the keyword extraction\ndataset[\"Keyword\"] = dataset[\"Title\"].apply(extract_keyword)\n\n# Group by keyword and get top 10\ntop_keywords = dataset[\"Keyword\"].value_counts().nlargest(10)\n\n# Plot the results\nplt.figure(figsize=(10, 6))\nax = top_keywords.plot(kind=\"bar\", color=\"skyblue\", edgecolor=\"black\")\n\n# Add data labels\nfor i, value in enumerate(top_keywords):\n    ax.text(i, value + 1, str(value), ha=''center'', va=''bottom'', fontweight=''bold'')\n\nplt.title(\"Top 10 Recurring Issues by Keyword\")\nplt.xlabel(\"Keyword\")\nplt.ylabel(\"Ticket Count\")\nplt.xticks(rotation=45)\nplt.tight_layout()\nplt.show()\n\n'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

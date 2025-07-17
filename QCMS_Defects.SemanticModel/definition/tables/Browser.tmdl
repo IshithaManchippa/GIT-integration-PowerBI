@@ -1,0 +1,41 @@
+table Browser
+	lineageTag: c37b3651-e7cf-4dba-a68f-7f8a8c30b2d9
+
+	column BrowserId
+		dataType: int64
+		formatString: 0
+		lineageTag: f69b030a-6b3d-4690-befe-89a49719a7c4
+		summarizeBy: count
+		sourceColumn: BrowserId
+
+		annotation SummarizationSetBy = Automatic
+
+	column BrowserName
+		dataType: string
+		lineageTag: 3b988aa2-79b3-4336-939f-f57c3c70d886
+		summarizeBy: none
+		sourceColumn: BrowserName
+
+		annotation SummarizationSetBy = Automatic
+
+	column BrowserVersion
+		dataType: string
+		lineageTag: e138ca5f-c90d-4c9e-961c-4ee05175dd71
+		summarizeBy: none
+		sourceColumn: BrowserVersion
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Browser-6c462396-21cc-4dfc-944c-8dacc18b5032 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("192.168.200.227,2700", "QCMS"),
+				    dbo_QC_M_Browser = Source{[Schema="dbo",Item="QC_M_Browser"]}[Data]
+				in
+				    dbo_QC_M_Browser
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

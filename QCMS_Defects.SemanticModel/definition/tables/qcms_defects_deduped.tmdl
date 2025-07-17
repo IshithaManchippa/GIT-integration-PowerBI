@@ -1,0 +1,54 @@
+table qcms_defects_deduped
+	lineageTag: e63ece37-bb49-4d9b-9485-3eb3ce8354d8
+
+	column DefectId
+		formatString: 0
+		lineageTag: 1519bee9-6737-439f-9d41-9b02b7a926f3
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: QCMS_DEFECTS[DefectId]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinCreatedDate
+		formatString: General Date
+		lineageTag: 2358ae5a-6374-486f-9f11-4815756f82a7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MinCreatedDate]
+
+		variation Variation
+			isDefault
+			relationship: a5ca6dca-86b5-4d6a-aeef-6d552a024698
+			defaultHierarchy: LocalDateTable_fcdfc2f4-1739-4384-b263-976aae2021eb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column SLA_Status
+		lineageTag: 0fb47670-fb69-4167-9f77-61c438618ac4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [SLA_Status]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition qcms_defects_deduped = calculated
+		mode: import
+		source = ```
+				
+				ADDCOLUMNS(
+				    SUMMARIZE('qcms_defects', 'qcms_defects'[DefectId]),
+				    "MinCreatedDate",
+				        CALCULATE(
+				            MIN('qcms_defects'[CreatedDate])
+				        ),
+				    "SLA_Status",
+				        CALCULATE(
+				            MAX('qcms_defects'[SLA_Status])
+				        )
+				)
+				
+				```
+
+	annotation PBI_Id = 92892c960c10451b9df9cefed6cb076b
+
