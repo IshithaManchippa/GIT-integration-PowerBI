@@ -3,11 +3,10 @@
   "name": "1ffdcfbbce06ab04dac5",
   "position": {
     "x": 0,
-    "y": 0,
-    "z": 1000,
-    "height": 720,
-    "width": 1280.5839416058395,
-    "tabOrder": 1000
+    "y": 131.80778032036613,
+    "z": 0,
+    "height": 586.54462242562931,
+    "width": 1281.8306636155608
   },
   "visual": {
     "visualType": "pythonVisual",
